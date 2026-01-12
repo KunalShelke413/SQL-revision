@@ -72,3 +72,24 @@ select c.CustomerID,c.CustomerName from customers c
 left join orders o on o.CustomerID=c.CustomerID
 group by c.CustomerID,c.CustomerName
 having count(o.OrderID) =0;
+
+#Q13
+select OrderID,avg(Quantity) from order_details
+group by OrderID
+order by OrderID;
+
+#Q14
+select sp.ShipperName, count(o.OrderID) as total_orders from shippers sp
+join orders o on o.ShipperID=sp.ShipperID
+group by sp.ShipperName
+order by total_orders desc
+limit 1;
+
+#Q15
+select c.CustomerID,c.CustomerName,count(distinct ct.CategoryID) from ((((customers c
+join orders o on o.CustomerID=c.CustomerID)
+join order_details od on od.OrderID=o.OrderID)
+join products p on p.ProductID=od.Product)
+join categories ct on p.CategoryID=ct.CategoryID)
+group by  c.CustomerID,c.CustomerName
+having count(distinct p.ProductName)>3;

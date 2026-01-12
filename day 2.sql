@@ -55,3 +55,20 @@ join orders o on o.EmployeeID=e.EmployeeID
 group by e.EmployeeID, e.FirstName, e.LastName;
 
 #Q10
+select ca.CategoryName, sum(od.Quantity) as total_quantity from categories ca
+join products p on p.CategoryID=ca.CategoryID
+join order_details od on od.Product=p.ProductID
+group by ca.CategoryName;
+
+#Q11
+select s.SupplierID,s.SupplierName from ((suppliers s
+left join products p on p.SupplierID=s.SupplierID)
+left join order_details od on od.Product=p.ProductID)
+group by s.SupplierID,s.SupplierName
+having sum(od.Quantity) is null;
+
+#Q12
+select c.CustomerID,c.CustomerName from customers c
+left join orders o on o.CustomerID=c.CustomerID
+group by c.CustomerID,c.CustomerName
+having count(o.OrderID) =0;

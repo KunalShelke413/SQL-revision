@@ -35,4 +35,23 @@ group by c.Country
 having total_quantity>200
 order by total_quantity;
 
+
 #Q7
+select p.ProductName, sum(od.Quantity*p.price) as total_sales from products p
+join order_details od on od.Product=p.ProductID
+group by p.ProductName;
+
+#Q8
+select c.CustomerName, sum(od.Quantity) as total_quantity from Customers c
+join orders o on o.CustomerID=c.CustomerID
+join order_details od on od.OrderID=o.OrderID
+group by c.CustomerName
+order by total_quantity
+limit 5;
+
+#Q9
+select e.EmployeeID, e.FirstName, e.LastName, count(o.OrderID) from employees e
+join orders o on o.EmployeeID=e.EmployeeID
+group by e.EmployeeID, e.FirstName, e.LastName;
+
+#Q10
